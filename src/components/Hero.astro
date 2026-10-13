@@ -1,0 +1,117 @@
+---
+import { Image } from "astro:assets";
+import CtaButton from "./CtaButton.astro";
+import { hero } from "../data/site";
+import skyline from "../assets/images/hero-skyline.png";
+import logo from "../assets/images/logo-kolega-bisnis.png";
+---
+
+<header class="hero relative isolate overflow-hidden" data-hero>
+  <!-- Latar langit + gedung. Crop Figma: lebar 110%, offset atas 12,3% dari tinggi gambar. -->
+  <div class="hero-bg absolute inset-0 -z-10" aria-hidden="true">
+    <Image
+      src={skyline}
+      alt=""
+      widths={[768, 1280, 1600, 2000]}
+      sizes="(min-width: 1024px) 110vw, 200vw"
+      loading="eager"
+      fetchpriority="high"
+      class="hero-bg-img"
+      data-hero-parallax
+    />
+    <div class="hero-scrim absolute inset-0 lg:hidden"></div>
+  </div>
+
+  <div class="container-page hero-inner">
+    <div class="logo-card" data-hero-reveal>
+      <Image src={logo} alt="Kolega Bisnis" width={76} height={96} densities={[1, 2]} loading="eager" class="logo-img" />
+    </div>
+
+    <h1 class="hero-title" data-hero-title>
+      <span class="block text-hero-kicker font-medium tracking-[-0.01em]" data-split>{hero.kicker}</span>
+      <span class="hero-accent block text-hero font-bold tracking-[-0.01em] text-hero-gradient" data-split data-split-gradient>
+        {hero.title}
+      </span>
+    </h1>
+
+    <p class="hero-lead text-hero-lead font-light text-shadow-hero" data-hero-reveal>
+      {hero.lead}
+    </p>
+
+    <div class="hero-cta" data-hero-reveal>
+      <CtaButton />
+    </div>
+  </div>
+</header>
+
+<style>
+  .hero {
+    min-height: calc(909 * var(--s));
+  }
+
+  .hero-bg :global(.hero-bg-img) {
+    position: absolute;
+    top: -9.6vw; /* bagian atas gambar yang ter-crop, sekaligus ruang untuk parallax */
+    left: 0;
+    width: 110%;
+    max-width: none;
+    height: calc(100% + 9.6vw);
+    object-fit: cover;
+    object-position: right top;
+  }
+
+  @media (max-width: 1023px) {
+    .hero-bg :global(.hero-bg-img) {
+      left: auto;
+      right: 0;
+      width: 100%;
+      object-position: 72% 100%;
+    }
+  }
+
+  /* Hanya di layar sempit: lapisan putih tipis agar teks hitam tetap terbaca di atas gedung */
+  .hero-scrim {
+    background: linear-gradient(180deg, rgb(255 255 255 / 0.35) 0%, rgb(255 255 255 / 0.55) 45%, rgb(255 255 255 / 0.2) 100%);
+  }
+
+  .hero-inner {
+    padding-top: max(1.25rem, calc(51 * var(--s)));
+    /* ruang di bawah CTA; kartu berikutnya naik menutupi 106px terakhir */
+    padding-bottom: max(7rem, calc(216 * var(--s)));
+  }
+
+  .logo-card {
+    display: grid;
+    place-items: center;
+    width: max(5rem, calc(124 * var(--s)));
+    aspect-ratio: 1;
+    margin-left: calc(-8 * var(--s)); /* kartu logo di x=119, konten di x=127 */
+    border: 1px solid #fff;
+    border-radius: var(--radius-logo);
+    background: rgb(255 255 255 / 0.34);
+    box-shadow: var(--shadow-glass);
+  }
+
+  .logo-card :global(.logo-img) {
+    width: 61.3%; /* 76 / 124 */
+    height: auto;
+  }
+
+  .hero-title {
+    margin-top: max(2.5rem, calc(64 * var(--s)));
+    max-width: 1307px;
+  }
+
+  .hero-accent {
+    margin-top: 0.02em;
+  }
+
+  .hero-lead {
+    margin-top: max(1.25rem, calc(24 * var(--s)));
+    max-width: 1260px;
+  }
+
+  .hero-cta {
+    margin-top: max(1.75rem, calc(47 * var(--s)));
+  }
+</style>

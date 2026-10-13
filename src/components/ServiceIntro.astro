@@ -1,0 +1,50 @@
+---
+import { Image } from "astro:assets";
+import CtaButton from "./CtaButton.astro";
+import { serviceIntro } from "../data/site";
+import handshake from "../assets/images/handshake.png";
+---
+
+<section class="bg-cream" aria-label="Tentang layanan kami">
+  <div class="container-page service-intro">
+    <Image
+      src={handshake}
+      alt={serviceIntro.imageAlt}
+      widths={[480, 720, 1128]}
+      sizes="(min-width: 1024px) 30vw, 100vw"
+      class="service-photo"
+      data-reveal
+    />
+    <div class="service-copy">
+      <p class="text-lead font-light leading-[1.72]" data-reveal>{serviceIntro.text}</p>
+      <div class="mt-6 lg:-ml-[calc(10*var(--s))] lg:mt-[calc(38*var(--s))]" data-reveal>
+        <CtaButton />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* image 3: 564×357 di x=127; paragraf di x=769 (lebar 1033) */
+  .service-intro {
+    display: grid;
+    gap: 2rem;
+    padding-top: max(4rem, calc(130 * var(--s)));
+  }
+
+  @media (min-width: 1024px) {
+    .service-intro {
+      grid-template-columns: calc(564 * var(--s)) minmax(0, 1033px);
+      column-gap: calc(78 * var(--s));
+      align-items: start;
+    }
+  }
+
+  .service-intro :global(.service-photo) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 564 / 357;
+    object-fit: cover;
+    margin-top: calc(21 * var(--s));
+  }
+</style>

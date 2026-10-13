@@ -1,0 +1,101 @@
+---
+import { Image } from "astro:assets";
+import { introCard } from "../data/site";
+import stripes from "../assets/images/bg-stripes.png";
+---
+
+<!--
+  Wrapper naik 106px menutupi bawah hero (kartu di y=803, hero berakhir y=909).
+  Latar garis oranye ("UDAHHHH TAR KE APUS AH (1)") mulai di y=843 dan berada di belakang
+  kartu sekaligus section berikutnya (slot), sama seperti urutan layer di Figma.
+-->
+<div class="intro-wrap relative isolate z-10">
+  <div class="intro-stripes-clip" aria-hidden="true">
+    <Image src={stripes} alt="" widths={[768, 1280, 1920]} sizes="100vw" loading="eager" class="intro-stripes" />
+  </div>
+
+  <section class="intro-card glass-card" aria-labelledby="intro-title" data-reveal>
+    <h2 id="intro-title" class="intro-heading">
+      <span class="block text-h2-sm font-normal">{introCard.headingSmall}</span>
+      {introCard.headingLines.map((line) => <span class="block text-h2 font-bold">{line}</span>)}
+    </h2>
+
+    <div class="text-body font-light">
+      {introCard.paragraphs.map((p) => <p>{p}</p>)}
+      <ul class="list-disc pl-[1.5em] font-bold">
+        {introCard.questions.map((q) => <li>{q}</li>)}
+      </ul>
+      <p>{introCard.closing}</p>
+    </div>
+  </section>
+
+  <slot />
+</div>
+
+<style>
+  .intro-wrap {
+    margin-top: calc(-106 * var(--s));
+  }
+
+  /* Di Figma gambar hero berada di atas layer garis, jadi garis baru terlihat mulai
+     akhir hero (y=909); gambar garisnya sendiri mulai di y=843. */
+  .intro-stripes-clip {
+    position: absolute;
+    z-index: -1;
+    top: calc(106 * var(--s));
+    left: 0;
+    right: 0;
+    height: calc(1112 * var(--s)); /* 843 + 1218 − 909 */
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .intro-stripes-clip :global(.intro-stripes) {
+    display: block;
+    width: 100%;
+    max-width: none;
+    height: auto;
+    margin-top: calc(-66 * var(--s));
+  }
+
+  /* "Rectangle 11": 1784×369 di x=68, radius 38, putih 10% + border putih + shadow.
+     Background blur Figma tidak ikut terekspor; 16px adalah nilai yang paling cocok
+     saat dibandingkan per piksel dengan render Figma (selisih rata-rata 3,7 vs 13,3 tanpa blur). */
+  .glass-card {
+    margin-inline: clamp(1rem, 3.54vw, 68px);
+    border: 1px solid #fff;
+    border-radius: var(--radius-card);
+    background: rgb(255 255 255 / 0.1);
+    box-shadow: var(--shadow-glass);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+  }
+
+  /* Layar sempit: kartu menumpuk di atas foto gedung → buat lebih pekat agar teks terbaca */
+  @media (max-width: 1023px) {
+    .glass-card {
+      background: rgb(255 255 255 / 0.6);
+    }
+  }
+
+  .intro-card {
+    display: grid;
+    gap: 1.5rem;
+    align-items: center;
+    min-height: calc(369 * var(--s));
+    padding: max(1.75rem, calc(56 * var(--s))) max(1.25rem, calc(25 * var(--s))) max(1.75rem, calc(56 * var(--s)))
+      max(1.25rem, calc(59 * var(--s)));
+  }
+
+  @media (min-width: 1024px) {
+    .intro-card {
+      /* Figma: kolom judul 790px, kolom paragraf 910px (x=917) */
+      grid-template-columns: minmax(0, 790fr) minmax(0, 910fr);
+      column-gap: 0;
+    }
+  }
+
+  .intro-heading {
+    text-wrap: balance;
+  }
+</style>

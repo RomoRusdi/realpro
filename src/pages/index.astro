@@ -1,0 +1,72 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import IntroCard from "../components/IntroCard.astro";
+import SectionSplit from "../components/SectionSplit.astro";
+import NumberedList from "../components/NumberedList.astro";
+import ServiceIntro from "../components/ServiceIntro.astro";
+import Footer from "../components/Footer.astro";
+import FloatingWhatsApp from "../components/FloatingWhatsApp.astro";
+import { benefits, conditions, expertise, services, steps } from "../data/site";
+---
+
+<Layout>
+  <Hero />
+
+  <main>
+    <IntroCard>
+      <SectionSplit id="kondisi" tone="none" headingSmall={conditions.headingSmall} heading={conditions.heading}>
+        <NumberedList items={conditions.items.map((text) => ({ text }))} spacing="conditions" />
+        <p class="closing-statement" data-reveal>{conditions.closingStatement}</p>
+      </SectionSplit>
+    </IntroCard>
+
+    <ServiceIntro />
+
+    <SectionSplit
+      id="layanan"
+      tone="cream"
+      headingSmall={services.headingSmall}
+      heading={services.heading}
+      class="[&>div]:pt-[max(4rem,calc(100*var(--s)))]"
+    >
+      <NumberedList items={services.items} />
+    </SectionSplit>
+
+    <SectionSplit id="cara-kerja" headingSmall={steps.headingSmall} heading={steps.heading}>
+      <NumberedList items={steps.items} />
+    </SectionSplit>
+
+    <SectionSplit id="benefit" tone="cream" headingSmall={benefits.headingSmall} heading={benefits.heading}>
+      <NumberedList items={benefits.items} />
+    </SectionSplit>
+
+    <SectionSplit id="keahlian" headingSmall={expertise.headingSmall} heading={expertise.heading}>
+      <NumberedList items={expertise.items} spacing="loose" />
+    </SectionSplit>
+  </main>
+
+  <Footer />
+  <FloatingWhatsApp />
+</Layout>
+
+<style>
+  /* Poin 09 di Figma → kalimat penutup yang menonjol di bawah daftar 01–08 */
+  .closing-statement {
+    margin-top: max(2.5rem, calc(80 * var(--s)));
+    margin-left: calc(max(2.75rem, calc(93 * var(--s))) + max(1rem, calc(37 * var(--s))));
+    padding-left: max(1rem, calc(24 * var(--s)));
+    border-left: 4px solid var(--color-accent);
+    font-size: var(--text-h2-sm);
+    line-height: var(--text-h2-sm--line-height);
+    font-weight: 700;
+    color: var(--color-brand-600);
+    text-wrap: balance;
+  }
+
+  @media (max-width: 767px) {
+    .closing-statement {
+      margin-left: calc(2.5rem + 0.875rem);
+    }
+  }
+</style>

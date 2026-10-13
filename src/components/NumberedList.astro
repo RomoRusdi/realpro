@@ -1,0 +1,155 @@
+---
+import { Icon } from "astro-icon/components";
+
+/**
+ * Daftar bernomor / berikon di kolom kanan SectionSplit.
+ * - Item tanpa `title`  → angka sejajar tengah dengan paragraf (section "kondisi").
+ * - Item dengan `title` → angka/ikon sejajar dengan judul, deskripsi di bawahnya.
+ */
+export interface ListItem {
+  title?: string;
+  text: string;
+  icon?: string;
+  iconSize?: readonly [number, number];
+  /** Bila diisi, angka di depan judul ("10+") menghitung naik saat terlihat. */
+  count?: number;
+}
+
+interface Props {
+  items: readonly ListItem[];
+  /** `tight` = jarak antar item untuk daftar berjudul (layanan, langkah, benefit) */
+  spacing?: "conditions" | "tight" | "loose";
+}
+
+const { items, spacing = "tight" } = Astro.props;
+const pad = (n: number) => String(n).padStart(2, "0");
+---
+
+<ol class:list={["numbered-list", `spacing-${spacing}`]} data-list>
+  {
+    items.map((item, i) => (
+      <li class:list={["item", { "has-title": item.title }]} data-list-item>
+        <span class="marker" aria-hidden="true">
+          {item.icon ? (
+            <Icon
+              name={item.icon}
+              class="marker-icon"
+              data-pop-icon
+              style={`--w:${item.iconSize?.[0] ?? 72};--h:${item.iconSize?.[1] ?? 72}`}
+            />
+          ) : (
+            <span class="marker-num">{pad(i + 1)}</span>
+          )}
+        </span>
+
+        {item.title ? (
+          <>
+            <h3 class="item-title">
+              {item.count !== undefined ? (
+                <>
+                  <span class="tabular-nums" data-count={item.count}>
+                    {item.count}
+                  </span>
+                  +{" "}
+                </>
+              ) : null}
+              {item.title}
+            </h3>
+            <p class="item-text font-extralight">{item.text}</p>
+          </>
+        ) : (
+          <p class="item-text item-text--solo font-light">{item.text}</p>
+        )}
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .numbered-list {
+    display: grid;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Jarak antar item mengikuti ritme Figma (190–192px per baris, ~311px di "Keahlian") */
+  .spacing-conditions {
+    row-gap: max(2rem, calc(80 * var(--s)));
+  }
+  .spacing-tight {
+    row-gap: max(1.75rem, calc(52 * var(--s)));
+  }
+  .spacing-loose {
+    row-gap: max(2.25rem, calc(96 * var(--s)));
+  }
+
+  .item {
+    display: grid;
+    grid-template-columns: max(2.75rem, calc(93 * var(--s))) minmax(0, 1fr);
+    column-gap: max(1rem, calc(37 * var(--s)));
+    align-items: center;
+  }
+
+  @media (max-width: 767px) {
+    .item {
+      grid-template-columns: 2.5rem minmax(0, 1fr);
+      column-gap: 0.875rem;
+    }
+  }
+
+  .marker {
+    grid-row: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Item berjudul: angka/ikon dipusatkan pada baris judul tanpa menambah tinggi baris
+     (angka 64px & ikon s.d. 107px lebih tinggi dari judul 44px). */
+  .has-title .marker {
+    grid-row: 1 / span 2;
+    align-self: start;
+    height: calc(var(--text-lead) * 1.375);
+  }
+
+  .marker-num {
+    font-size: var(--text-num);
+    line-height: var(--text-num--line-height);
+    font-weight: 900;
+    color: var(--color-accent);
+    letter-spacing: -0.08em; /* -5.12px @ 64px */
+    font-variant-numeric: tabular-nums;
+  }
+
+  :global(.marker-icon) {
+    flex: none;
+    width: max(calc(var(--w) * 0.6px), calc(var(--w) * var(--s)));
+    height: max(calc(var(--h) * 0.6px), calc(var(--h) * var(--s)));
+  }
+
+  .item-title {
+    grid-column: 2;
+    grid-row: 1;
+    font-size: var(--text-lead);
+    line-height: var(--text-lead--line-height);
+    font-weight: 700;
+  }
+
+  .item-text {
+    grid-column: 2;
+    max-width: 626px;
+    font-size: var(--text-lead);
+    line-height: 1.1875; /* 38px @ 32px */
+  }
+
+  .has-title .item-text {
+    grid-row: 2;
+    margin-top: max(0.25rem, calc(6 * var(--s)));
+  }
+
+  .item-text--solo {
+    grid-row: 1;
+    line-height: var(--text-lead--line-height);
+  }
+</style>
