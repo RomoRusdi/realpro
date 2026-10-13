@@ -71,6 +71,10 @@
 :root {
   /* 1 "px Figma" yang ikut mengecil di bawah 1920px (minimal 0.6px). */
   --s: clamp(0.6px, calc(100vw / 1920), 1px);
+
+  /* Sticky CTA bar (≥768px) */
+  --sticky-top-gap: 1rem;
+  --sticky-bar-h: 4.25rem;
 }
 
 @layer base {
@@ -84,6 +88,17 @@
     /* Figma memakai DM Sans dengan optical size 14 di semua teks */
     font-variation-settings: "opsz" 14;
     overflow-x: clip;
+  }
+
+  /* Link anchor: target tidak tertutup sticky CTA bar */
+  [id] {
+    scroll-margin-top: calc(var(--sticky-top-gap) + var(--sticky-bar-h) + 1.5rem);
+  }
+
+  @media (max-width: 767px) {
+    [id] {
+      scroll-margin-top: 1rem; /* di mobile CTA ada di bawah layar */
+    }
   }
 
   :focus-visible {

@@ -18,8 +18,7 @@ export default defineConfig({
   build: { inlineStylesheets: "always" },
   integrations: [
     icon({
-      // Ikon lokal (dari Figma) ada di src/icons; dari Iconify hanya yang dipakai.
-      include: { logos: ["whatsapp-icon"] },
+      // Semua ikon adalah SVG lokal hasil ekspor Figma di src/icons.
       // Jangan biarkan SVGO mengubah ikon berwarna dari Figma
       svgoOptions: { multipass: false, plugins: [{ name: "preset-default", params: { overrides: { cleanupIds: false } } }] },
     }),

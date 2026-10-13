@@ -55,7 +55,14 @@ import logo from "../assets/images/logo-kolega-bisnis.png";
     display: grid;
     gap: 2.5rem;
     padding-top: max(3.5rem, calc(104 * var(--s)));
-    padding-bottom: max(5.5rem, calc(110 * var(--s)));
+    padding-bottom: max(3.5rem, calc(110 * var(--s)));
+  }
+
+  /* Mobile: beri ruang untuk tombol CTA yang menempel di bawah layar */
+  @media (max-width: 767px) {
+    .footer-inner {
+      padding-bottom: calc(7rem + env(safe-area-inset-bottom));
+    }
   }
 
   @media (min-width: 768px) {

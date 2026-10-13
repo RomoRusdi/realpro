@@ -6,11 +6,12 @@ import SectionSplit from "../components/SectionSplit.astro";
 import NumberedList from "../components/NumberedList.astro";
 import ServiceIntro from "../components/ServiceIntro.astro";
 import Footer from "../components/Footer.astro";
-import FloatingWhatsApp from "../components/FloatingWhatsApp.astro";
+import StickyCta from "../components/StickyCta.astro";
 import { benefits, conditions, expertise, services, steps } from "../data/site";
 ---
 
 <Layout>
+  <StickyCta />
   <Hero />
 
   <main>
@@ -47,7 +48,6 @@ import { benefits, conditions, expertise, services, steps } from "../data/site";
   </main>
 
   <Footer />
-  <FloatingWhatsApp />
 </Layout>
 
 <style>
