@@ -3,10 +3,19 @@ import { Image } from "astro:assets";
 import CtaButton from "./CtaButton.astro";
 import { serviceIntro } from "../data/site";
 import handshake from "../assets/images/handshake.png";
+
+interface Props {
+  /** Label section untuk screen reader (dibedakan bila komponen dipakai lebih dari sekali) */
+  label?: string;
+  /** Tambah ruang bawah — dipakai saat section ini berdiri sendiri (mis. sebelum footer) */
+  padBottom?: boolean;
+}
+
+const { label = "Tentang layanan kami", padBottom = false } = Astro.props;
 ---
 
-<section class="bg-cream" aria-label="Tentang layanan kami">
-  <div class="container-page service-intro">
+<section class="bg-cream" aria-label={label}>
+  <div class:list={["container-page service-intro", { "pad-bottom": padBottom }]}>
     <Image
       src={handshake}
       alt={serviceIntro.imageAlt}
@@ -30,6 +39,11 @@ import handshake from "../assets/images/handshake.png";
     display: grid;
     gap: 2rem;
     padding-top: max(4rem, calc(130 * var(--s)));
+  }
+
+  .service-intro.pad-bottom {
+    /* + padding atas footer (104px) ≈ jarak atas section (130px) */
+    padding-bottom: max(1.5rem, calc(40 * var(--s)));
   }
 
   @media (min-width: 1024px) {

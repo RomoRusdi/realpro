@@ -65,7 +65,7 @@ src/
 │  ├─ IntroCard.astro         # kartu kaca + latar garis oranye (membungkus section "kondisi")
 │  ├─ SectionSplit.astro      # pola berulang: judul kiri (sticky) · garis tengah · konten kanan
 │  ├─ NumberedList.astro      # daftar bernomor / berikon, opsional penghitung "10+"
-│  ├─ ServiceIntro.astro      # foto jabat tangan + paragraf + CTA
+│  ├─ ServiceIntro.astro      # foto jabat tangan + paragraf + CTA (dipakai 2×: setelah "kondisi" & sebelum footer)
 │  ├─ CtaButton.astro         # tombol "Konsultasikan Kebutuhan Pajak Anda"
 │  ├─ StickyCta.astro         # wadah sticky CTA: bar atas (≥768px) & tombol bawah (<768px)
 │  └─ Footer.astro
@@ -109,9 +109,11 @@ tepat di tengah halaman (x=960).
 
 Keputusan yang sudah disepakati, plus hal ambigu di desain yang diputuskan saat implementasi:
 
-1. **Warna tombol CTA digelapkan sedikit.** Gradasi Figma `#ff9d00 → #f36e36` memberi kontras teks putih
-   ±2:1 (gagal WCAG AA). Dipakai `#e86f00 → #e0582a` (≥3:1 untuk teks tebal 20px). Untuk kembali ke warna
-   Figma, ubah `--color-cta-from` / `--color-cta-to` di `global.css`.
+1. **Warna tombol CTA persis Figma** (`#ff9d00 → #f36e36`), atas permintaan. Saat hover, chip panah berubah
+   jadi putih solid sesuai varian hover komponen "Consultation Now" di Figma; panah juga sedikit bergeser ke
+   kanan dan tombol mengecil saat ditekan. Catatan: kontras teks putih di atas gradasi ini ±2:1, di bawah
+   WCAG AA (3:1 untuk teks besar). Versi yang lolos AA: `#e86f00 → #e0582a` — ganti `--color-cta-from` /
+   `--color-cta-to` di `global.css` bila diperlukan.
 2. **Angka 01–09 dan ikon tetap `#ffa246`** sesuai Figma. Elemen ini dekoratif (`aria-hidden`; urutan sudah
    disampaikan lewat `<ol>`), tetapi kontras visualnya terhadap latar hanya ±1,7:1. Bila ingin ketat AA,
    ganti `--color-accent` ke `#d9640e`.
@@ -145,9 +147,11 @@ Keputusan yang sudah disepakati, plus hal ambigu di desain yang diputuskan saat 
     layanan) terlihat, dan muncul/hilang tanpa animasi bila reduced motion aktif. Tanpa JavaScript tombol
     tetap di hero. Semua elemen ber-`id` diberi `scroll-margin-top` agar tidak tertutup bar saat lewat link
     anchor. Desain bar (putih 70%, blur 16px, radius 20px) tidak ada di Figma; dibuat mengikuti gaya kartu kaca.
-13. **Layer "UDAHHHH TAR KE APUS AH"** tetap dipakai sebagai latar garis oranye (file `bg-stripes.png`) dan
+14. **Section foto jabat tangan + CTA diulang sebelum footer** (latar krem, menyatu dengan footer) sebagai ajakan
+    penutup. Sticky bar disembunyikan selama salah satu dari kedua CTA ini terlihat.
+15. **Layer "UDAHHHH TAR KE APUS AH"** tetap dipakai sebagai latar garis oranye (file `bg-stripes.png`) dan
     latar hero (`hero-skyline.png`).
-14. **Gradasi judul hero** dipasang per kata setelah SplitText memecah teks (background-clip tidak ikut ke
+16. **Gradasi judul hero** dipasang per kata setelah SplitText memecah teks (background-clip tidak ikut ke
     elemen anak yang di-transform).
-15. **Animasi penghitung "10+" / "100+"** mengubah teks (bukan transform/opacity). Ini satu-satunya
+17. **Animasi penghitung "10+" / "100+"** mengubah teks (bukan transform/opacity). Ini satu-satunya
     pengecualian dan memang diminta. Semua animasi lain hanya memakai transform & opacity.

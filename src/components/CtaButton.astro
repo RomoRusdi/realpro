@@ -55,10 +55,6 @@ const { label = ctaLabel, href = contact.whatsappUrl, class: className, ...rest 
     }
   }
 
-  .cta:hover {
-    box-shadow: 0 8px 18px -4px rgb(0 0 0 / 0.3);
-  }
-
   .cta:active {
     transform: scale(0.97);
   }
@@ -80,6 +76,13 @@ const { label = ctaLabel, href = contact.whatsappUrl, class: className, ...rest 
     background: rgb(255 255 255 / 0.1);
     box-shadow: var(--shadow-cta);
     color: #000;
+    transition: background-color 0.25s var(--ease-out-2);
+  }
+
+  /* Varian hover di Figma (106:60): chip panah jadi putih solid */
+  .cta:hover .cta-chip,
+  .cta:focus-visible .cta-chip {
+    background: #fff;
   }
 
   .cta-chip :global(.cta-arrow) {

@@ -7,13 +7,13 @@ gsap.registerPlugin(ScrollTrigger, Flip);
 /**
  * Sticky CTA: tombol CTA hero (elemen yang sama, bukan duplikat) dipindah ke bar atas (≥768px)
  * atau ke bawah layar (<768px) saat keluar viewport, lalu kembali saat scroll ke atas.
- * Bar disembunyikan sementara saat CTA kedua (intro layanan) terlihat.
+ * Bar disembunyikan sementara selama salah satu CTA lain (section intro layanan) terlihat.
  * Reduced motion: pindah & tampil/sembunyi langsung, tanpa animasi.
  */
 
 const cta = document.querySelector<HTMLElement>("[data-flip-cta]");
 const heroSlot = cta?.parentElement;
-const secondary = document.querySelector<HTMLElement>("[data-cta-secondary]");
+const secondaries = gsap.utils.toArray<HTMLElement>("[data-cta-secondary]");
 
 if (cta && heroSlot) {
   const mm = gsap.matchMedia();
@@ -118,17 +118,21 @@ if (cta && heroSlot) {
         },
       });
 
-      if (secondary) {
+      // Bisa ada lebih dari satu CTA lain di halaman; bar disembunyikan selama minimal satu terlihat
+      const visibleSecondaries = new Set<HTMLElement>();
+      secondaries.forEach((el) => {
         ScrollTrigger.create({
-          trigger: secondary,
+          trigger: el,
           start: "top bottom",
           end: "bottom top",
           onToggle: (self) => {
-            suppressed = self.isActive;
+            if (self.isActive) visibleSecondaries.add(el);
+            else visibleSecondaries.delete(el);
+            suppressed = visibleSecondaries.size > 0;
             render();
           },
         });
-      }
+      });
 
       // Saat breakpoint / preferensi berubah: kembalikan tombol ke hero
       return () => {

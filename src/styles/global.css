@@ -21,10 +21,11 @@
   --color-brand-500: #b15613; /* gradasi judul hero (tengah) */
   --color-brand-600: #a1531b; /* gradasi tagline (awal) */
   --color-brand-700: #712f00; /* gradasi tagline (tengah) */
-  /* Gradasi tombol CTA. Figma: #ff9d00 → #f36e36 (kontras teks putih ±2:1).
-     Digelapkan sedikit agar teks putih lolos WCAG AA untuk teks besar (≥3:1). */
-  --color-cta-from: #e86f00;
-  --color-cta-to: #e0582a;
+  /* Gradasi tombol CTA — persis Figma ("Consultation Now").
+     Catatan: kontras teks putih di atasnya ±2:1 (di bawah WCAG AA 3:1 untuk teks besar).
+     Versi lolos AA: #e86f00 → #e0582a. */
+  --color-cta-from: #ff9d00;
+  --color-cta-to: #f36e36;
   --color-whatsapp: #25d366;
 
   /* Type scale: clamp(mobile, fluid, figma@1920) */
