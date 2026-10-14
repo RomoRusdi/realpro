@@ -5,9 +5,7 @@ import { serviceIntro } from "../data/site";
 import handshake from "../assets/images/handshake.png";
 
 interface Props {
-  /** Label section untuk screen reader (dibedakan bila komponen dipakai lebih dari sekali) */
   label?: string;
-  /** Tambah ruang bawah — dipakai saat section ini berdiri sendiri (mis. sebelum footer) */
   padBottom?: boolean;
 }
 
@@ -34,7 +32,6 @@ const { label = "Tentang layanan kami", padBottom = false } = Astro.props;
 </section>
 
 <style>
-  /* image 3: 564×357 di x=127; paragraf di x=769 (lebar 1033) */
   .service-intro {
     display: grid;
     gap: 2rem;
@@ -42,7 +39,6 @@ const { label = "Tentang layanan kami", padBottom = false } = Astro.props;
   }
 
   .service-intro.pad-bottom {
-    /* + padding atas footer (104px) ≈ jarak atas section (130px) */
     padding-bottom: max(1.5rem, calc(40 * var(--s)));
   }
 

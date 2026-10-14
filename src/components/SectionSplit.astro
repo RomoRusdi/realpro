@@ -1,17 +1,8 @@
 ---
-/**
- * Pola berulang dari Figma: judul di kiri (sticky di desktop), garis vertikal di tengah (x=960),
- * konten/daftar di kanan. Di bawah 1024px jadi satu kolom, garis pindah ke kiri daftar.
- *
- * Di desktop, dasar setiap section ditimpa bentuk blur sewarna latar (Figma: "Rectangle 13/17/18/20/21/24",
- * 793×299 di x=29, blur 25.1). Judul sticky meluncur sampai dasar section lalu tertutup bentuk itu,
- * sehingga tulisannya tampak memudar dan menghilang.
- */
 interface Props {
   id: string;
   headingSmall: string;
   heading: string;
-  /** `none` = transparan (dipakai bila latar disediakan wrapper, mis. garis oranye) */
   tone?: "surface" | "cream" | "none";
   class?: string;
 }
@@ -40,7 +31,6 @@ const fadeColor = tone === "cream" ? "var(--color-cream)" : "var(--color-surface
 </section>
 
 <script>
-  // Simpan tinggi judul di section agar bentuk pemudar selalu cukup tinggi untuk menutupinya
   const observer = new ResizeObserver((entries) => {
     for (const entry of entries) {
       const section = entry.target.closest<HTMLElement>(".split");
@@ -53,11 +43,10 @@ const fadeColor = tone === "cream" ? "var(--color-cream)" : "var(--color-surface
 <style>
   .split-heading {
     max-width: 677px;
-    top: max(6.5rem, calc(140 * var(--s))); /* selalu di bawah sticky CTA bar */
+    top: max(6.5rem, calc(140 * var(--s)));
   }
 
   .split-body {
-    /* jarak dari garis ke kolom angka */
     padding-left: max(1.5rem, calc(94 * var(--s)));
   }
 
@@ -83,16 +72,13 @@ const fadeColor = tone === "cream" ? "var(--color-cream)" : "var(--color-surface
 
   @media (min-width: 1024px) {
     .split-line {
-      left: -1px; /* tepat di tengah halaman (x=960 di Figma) */
+      left: -1px;
     }
 
-    /* `clip` (bukan `hidden`) agar position: sticky di dalamnya tetap bekerja */
     .split {
       overflow: clip;
     }
 
-    /* Area sticky judul diperpanjang sampai dasar section (melewati padding bawah container).
-       Pakai margin negatif, bukan padding: sticky berhenti di tepi *konten* parent-nya. */
     .split-heading-cell {
       margin-bottom: calc(-1 * var(--spacing-section-b));
     }
@@ -101,12 +87,9 @@ const fadeColor = tone === "cream" ? "var(--color-cream)" : "var(--color-surface
       display: block;
       position: absolute;
       z-index: 1;
-      left: calc(29 * var(--s) - 60px); /* tepi blur kiri (±75px) digeser keluar layar agar tidak mengenai judul */
-      bottom: calc(-80 * var(--s) - 40px); /* tepi blur bawah jatuh di luar section (ter-clip) */
-      /* Figma: lebar 793 (x=29→822). Dibuat menutup seluruh kolom judul, berhenti sebelum garis tengah. */
+      left: calc(29 * var(--s) - 60px);
+      bottom: calc(-80 * var(--s) - 40px);
       right: calc(50% + 40px);
-      /* Tinggi = tinggi judul + ruang untuk tepi blur, agar judul tertutup penuh di akhir section.
-         --heading-h diisi skrip di bawah; tanpa JS memakai ukuran Figma (299px). */
       height: max(calc(299 * var(--s)), calc(var(--heading-h, 0px) + 80 * var(--s) + 130px));
       background: var(--fade-color);
       filter: blur(25.1px);

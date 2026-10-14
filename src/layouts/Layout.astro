@@ -30,7 +30,6 @@ const ogImage = new URL(seo.ogImage, Astro.site);
     <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="id_ID" />
     <meta property="og:site_name" content={seo.siteName} />
@@ -42,18 +41,12 @@ const ogImage = new URL(seo.ogImage, Astro.site);
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content={seo.ogImageAlt} />
 
-    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
     <meta name="twitter:image:alt" content={seo.ogImageAlt} />
 
-    <!--
-      Elemen hero disembunyikan sebentar sampai GSAP siap (mencegah "kedip").
-      Tidak berlaku bila pengguna memilih reduced motion. Failsafe: bila skrip animasi
-      gagal dimuat, class dilepas setelah 3 detik sehingga konten tetap tampil.
-    -->
     <script is:inline>
       (function () {
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -65,8 +58,8 @@ const ogImage = new URL(seo.ogImage, Astro.site);
       })();
     </script>
 
-    <!-- ================= Analytics (aktifkan bila diperlukan) =================
-    Google Analytics 4 — ganti G-XXXXXXXXXX dengan Measurement ID Anda:
+    <!--
+    Google Analytics (ganti G-XXXXXXXXXX):
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
@@ -75,7 +68,7 @@ const ogImage = new URL(seo.ogImage, Astro.site);
       gtag('config', 'G-XXXXXXXXXX');
     </script>
 
-    Meta Pixel — ganti PIXEL_ID dengan ID Pixel Anda:
+    Meta Pixel (ganti PIXEL_ID):
     <script is:inline>
       !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
       n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
@@ -84,13 +77,14 @@ const ogImage = new URL(seo.ogImage, Astro.site);
       document,'script','https://connect.facebook.net/en_US/fbevents.js');
       fbq('init', 'PIXEL_ID'); fbq('track', 'PageView');
     </script>
-    ========================================================================== -->
+    -->
   </head>
   <body>
     <slot />
     <script>
       import "../scripts/animations";
       import "../scripts/sticky-cta";
+      import "../scripts/scroll-top";
     </script>
   </body>
 </html>

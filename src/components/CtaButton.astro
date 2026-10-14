@@ -27,7 +27,6 @@ const { label = ctaLabel, href = contact.whatsappUrl, class: className, ...rest 
 </a>
 
 <style>
-  /* Figma "Consultation Now": 537×77, radius 21, gradasi oranye, chip 97×51 radius 15 */
   .cta {
     display: inline-flex;
     align-items: center;
@@ -63,7 +62,7 @@ const { label = ctaLabel, href = contact.whatsappUrl, class: className, ...rest 
     font-size: var(--text-cta);
     line-height: var(--text-cta--line-height);
     font-weight: 700;
-    letter-spacing: 0.02em; /* 0.4px @ 20px */
+    letter-spacing: 0.02em;
   }
 
   .cta-chip {
@@ -79,7 +78,6 @@ const { label = ctaLabel, href = contact.whatsappUrl, class: className, ...rest 
     transition: background-color 0.25s var(--ease-out-2);
   }
 
-  /* Varian hover di Figma (106:60): chip panah jadi putih solid */
   .cta:hover .cta-chip,
   .cta:focus-visible .cta-chip {
     background: #fff;

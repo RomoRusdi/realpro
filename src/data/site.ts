@@ -1,9 +1,4 @@
-/**
- * Semua teks & kontak landing page ada di sini.
- * Ubah file ini untuk mengganti copy, nomor WhatsApp, email, atau alamat.
- */
-
-const whatsappNumber = "628511316655"; // format internasional tanpa "+" / "0" di depan
+const whatsappNumber = "628511316655";
 const whatsappMessage = "Halo Kolega Bisnis, saya ingin konsultasi tentang layanan pajak bulanan.";
 
 export const contact = {

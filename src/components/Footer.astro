@@ -7,7 +7,9 @@ import logo from "../assets/images/logo-kolega-bisnis.png";
 
 <footer class="bg-cream" aria-labelledby="footer-title">
   <div class="container-page footer-inner">
-    <Image src={logo} alt="Kolega Bisnis" width={127} height={160} densities={[1, 1.25]} class="footer-logo" />
+    <a href="#top" class="footer-logo-link" aria-label="Kolega Bisnis — kembali ke atas">
+      <Image src={logo} alt="" width={127} height={160} densities={[1, 1.25]} class="footer-logo" />
+    </a>
 
     <div class="footer-contact font-poppins">
       <h2 id="footer-title" class="contact-title">{footer.heading}</h2>
@@ -50,7 +52,6 @@ import logo from "../assets/images/logo-kolega-bisnis.png";
 </footer>
 
 <style>
-  /* Figma: logo 127×160 di x=122, "Get in Touch" x=300, teks kontak x=364, tagline rata kanan (right 133) */
   .footer-inner {
     display: grid;
     gap: 2.5rem;
@@ -58,7 +59,6 @@ import logo from "../assets/images/logo-kolega-bisnis.png";
     padding-bottom: max(3.5rem, calc(110 * var(--s)));
   }
 
-  /* Mobile: beri ruang untuk tombol CTA yang menempel di bawah layar */
   @media (max-width: 767px) {
     .footer-inner {
       padding-bottom: calc(7rem + env(safe-area-inset-bottom));
@@ -87,15 +87,24 @@ import logo from "../assets/images/logo-kolega-bisnis.png";
     }
   }
 
-  .footer-inner :global(.footer-logo) {
-    width: max(5.5rem, calc(127 * var(--s)));
-    height: auto;
+  .footer-logo-link {
+    display: block;
+    align-self: start;
+    width: fit-content;
     margin-left: calc(-5 * var(--s));
+    border-radius: 6px;
+  }
+
+  .footer-inner :global(.footer-logo) {
+    display: block;
+    width: max(5.5rem, calc(127 * var(--s)));
+    max-width: none;
+    height: auto;
   }
 
   .contact-title {
     font-size: var(--text-lead);
-    line-height: 1.28; /* 41px @ 32px */
+    line-height: 1.28;
     font-weight: 700;
   }
 
@@ -113,7 +122,7 @@ import logo from "../assets/images/logo-kolega-bisnis.png";
     column-gap: max(0.75rem, calc(15 * var(--s)));
     align-items: center;
     font-size: var(--text-lead);
-    line-height: 1.16; /* 37px @ 32px */
+    line-height: 1.16;
     font-weight: 300;
     color: inherit;
     text-decoration: none;
@@ -125,7 +134,7 @@ import logo from "../assets/images/logo-kolega-bisnis.png";
   }
 
   .contact-link--address address {
-    max-width: max(16rem, calc(565 * var(--s))); /* Figma: alamat dibungkus di lebar 565 */
+    max-width: max(16rem, calc(565 * var(--s)));
   }
 
   .contact-link:hover span,

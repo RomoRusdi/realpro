@@ -9,8 +9,6 @@ const releaseHero = () => root.classList.remove("anim-pending");
 
 const mm = gsap.matchMedia();
 
-// Semua animasi gerak hanya berjalan bila pengguna tidak memilih "reduce motion".
-// Bila reduce → tidak ada yang disembunyikan, konten langsung tampil.
 mm.add("(prefers-reduced-motion: no-preference)", () => {
   heroIntro();
   heroParallax();
@@ -20,14 +18,12 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
   popIcons();
   counters();
 
-  // Gambar & font bisa mengubah tinggi halaman setelah load
   window.addEventListener("load", () => ScrollTrigger.refresh(), { once: true });
   document.fonts?.ready.then(() => ScrollTrigger.refresh());
 });
 
 mm.add("(prefers-reduced-motion: reduce)", releaseHero);
 
-/** Hero: judul per kata (SplitText), lalu logo, paragraf & CTA fade-up berurutan. */
 function heroIntro() {
   const title = document.querySelector<HTMLElement>("[data-hero-title]");
   const reveals = gsap.utils.toArray<HTMLElement>("[data-hero-reveal]");
@@ -38,9 +34,8 @@ function heroIntro() {
 
   document.fonts.ready.then(() => {
     lines.forEach((line) => {
-      // aria "none": teks tetap dibaca utuh oleh screen reader tanpa aria-label di <span>
       const split = SplitText.create(line, { type: "words", wordsClass: "split-word", aria: "none" });
-      // background-clip:text tidak ikut ke child yang di-transform → pindahkan gradasi ke tiap kata
+
       if (line.hasAttribute("data-split-gradient")) {
         line.classList.remove("text-hero-gradient");
         split.words.forEach((w) => w.classList.add("text-hero-gradient"));
@@ -60,7 +55,6 @@ function heroIntro() {
   });
 }
 
-/** Latar gedung bergerak lebih lambat dari scroll (maks. 9vw, sesuai ruang crop di atas gambar). */
 function heroParallax() {
   const hero = document.querySelector("[data-hero]");
   const img = document.querySelector("[data-hero-parallax]");
@@ -72,7 +66,6 @@ function heroParallax() {
   });
 }
 
-/** Garis vertikal tiap section "tergambar" dari atas ke bawah mengikuti scroll. */
 function splitLines() {
   gsap.utils.toArray<HTMLElement>("[data-split-line]").forEach((line) => {
     gsap.fromTo(
@@ -87,7 +80,6 @@ function splitLines() {
   });
 }
 
-/** Item daftar bernomor fade-up bergantian saat masuk viewport. */
 function listItems() {
   gsap.utils.toArray<HTMLElement>("[data-list]").forEach((list) => {
     const items = list.querySelectorAll("[data-list-item]");
@@ -101,7 +93,6 @@ function listItems() {
   });
 }
 
-/** Blok umum (kartu intro, foto, paragraf, kalimat penutup). */
 function revealBlocks() {
   gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((el) => {
     gsap.from(el, {
@@ -114,7 +105,6 @@ function revealBlocks() {
   });
 }
 
-/** Ikon benefit & keahlian: scale-in kecil. */
 function popIcons() {
   gsap.utils.toArray<HTMLElement>("[data-pop-icon]").forEach((icon) => {
     gsap.from(icon, {
@@ -128,7 +118,6 @@ function popIcons() {
   });
 }
 
-/** "10+" dan "100+" menghitung naik dari 0, sekali. */
 function counters() {
   gsap.utils.toArray<HTMLElement>("[data-count]").forEach((el) => {
     const target = Number(el.dataset.count);

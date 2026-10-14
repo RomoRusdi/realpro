@@ -4,13 +4,6 @@ import { Flip } from "gsap/Flip";
 
 gsap.registerPlugin(ScrollTrigger, Flip);
 
-/**
- * Sticky CTA: tombol CTA hero (elemen yang sama, bukan duplikat) dipindah ke bar atas (≥768px)
- * atau ke bawah layar (<768px) saat keluar viewport, lalu kembali saat scroll ke atas.
- * Bar disembunyikan sementara selama salah satu CTA lain (section intro layanan) terlihat.
- * Reduced motion: pindah & tampil/sembunyi langsung, tanpa animasi.
- */
-
 const cta = document.querySelector<HTMLElement>("[data-flip-cta]");
 const heroSlot = cta?.parentElement;
 const secondaries = gsap.utils.toArray<HTMLElement>("[data-cta-secondary]");
@@ -32,34 +25,30 @@ if (cta && heroSlot) {
 
       const fadeParts = container.querySelectorAll<HTMLElement>("[data-sticky-fade]");
       const offsetY = desktop ? -16 : 16;
-      let docked = false; // CTA hero sudah lewat
-      let suppressed = false; // CTA kedua sedang terlihat
+      let docked = false;
+      let suppressed = false;
       let shown: "hero" | "bar" | "hidden" = "hero";
 
       gsap.set(container, { autoAlpha: 0 });
 
-      /** Pindahkan CTA ke parent baru; dengan Flip bila animasi diizinkan. */
       const moveCta = (target: HTMLElement, animate: boolean) => {
         if (cta.parentElement === target) return;
         const state = Flip.getState(cta);
         Flip.killFlipsOf(cta);
         gsap.set(cta, { clearProps: "all" });
 
-        // Kunci tinggi wadah di hero agar layout tidak melompat saat tombol keluar
         if (target === heroSlot) heroSlot.style.minHeight = "";
         else if (!heroSlot.style.minHeight) heroSlot.style.minHeight = `${heroSlot.offsetHeight}px`;
 
-        // Memindah elemen di DOM melepas fokus keyboard → kembalikan bila tombol sedang difokus
         const hadFocus = document.activeElement === cta;
         target.appendChild(cta);
         if (hadFocus) cta.focus({ preventScroll: true });
         if (animate && !reduce) {
-          // transisi CSS tombol (hover/press) dimatikan sementara agar tidak bertabrakan dengan Flip
           gsap.set(cta, { transition: "none" });
           Flip.from(state, {
             duration: 0.5,
             ease: "power3.out",
-            absolute: false, // tombol sudah di posisi akhir; Flip cukup menganimasikan transform & ukuran
+            absolute: false,
             zIndex: 60,
             onComplete: () => gsap.set(cta, { clearProps: "transition" }),
           });
@@ -77,7 +66,6 @@ if (cta && heroSlot) {
         if (next === "bar") {
           gsap.set(container, { autoAlpha: 1 });
           if (prev === "hero") {
-            // bar muncul, tombol "terbang" dari hero ke dalam bar
             gsap.fromTo(fadeParts, { autoAlpha: 0, y: offsetY }, { autoAlpha: 1, y: 0, duration: d, ease: "power2.out" });
             gsap.set(container, { y: 0 });
             moveCta(slot, true);
@@ -86,11 +74,9 @@ if (cta && heroSlot) {
             gsap.fromTo(container, { y: offsetY }, { y: 0, autoAlpha: 1, duration: d, ease: "power2.out" });
           }
         } else if (next === "hidden") {
-          // CTA kedua terlihat → sembunyikan bar (beserta tombolnya) sementara
           if (prev === "hero") moveCta(slot, false);
           gsap.to(container, { autoAlpha: 0, y: offsetY, duration: d, ease: "power2.out" });
         } else {
-          // kembali ke hero
           if (prev === "bar") {
             moveCta(heroSlot, true);
             gsap.to(fadeParts, { autoAlpha: 0, y: offsetY, duration: d, ease: "power2.out" });
@@ -104,10 +90,10 @@ if (cta && heroSlot) {
 
       ScrollTrigger.create({
         trigger: heroSlot,
-        // desktop: pindah saat tombol mencapai area bar (±100px dari atas); mobile: saat keluar layar
+
         start: () => `bottom ${desktop ? 100 : 0}px`,
         invalidateOnRefresh: true,
-        // Hanya "lewat" & "kembali ke atas" yang dipakai: bar tetap tampil sampai dasar halaman (footer)
+
         onEnter: () => {
           docked = true;
           render();
@@ -118,7 +104,6 @@ if (cta && heroSlot) {
         },
       });
 
-      // Bisa ada lebih dari satu CTA lain di halaman; bar disembunyikan selama minimal satu terlihat
       const visibleSecondaries = new Set<HTMLElement>();
       secondaries.forEach((el) => {
         ScrollTrigger.create({
@@ -134,7 +119,6 @@ if (cta && heroSlot) {
         });
       });
 
-      // Saat breakpoint / preferensi berubah: kembalikan tombol ke hero
       return () => {
         Flip.killFlipsOf(cta);
         gsap.set(cta, { clearProps: "all" });

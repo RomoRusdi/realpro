@@ -46,7 +46,6 @@ import { benefits, conditions, expertise, services, steps } from "../data/site";
       <NumberedList items={expertise.items} spacing="loose" />
     </SectionSplit>
 
-    <!-- Ajakan konsultasi diulang sebelum footer (latar krem, menyatu dengan footer) -->
     <ServiceIntro label="Konsultasi layanan pajak bulanan" padBottom />
   </main>
 
@@ -54,7 +53,6 @@ import { benefits, conditions, expertise, services, steps } from "../data/site";
 </Layout>
 
 <style>
-  /* Poin 09 di Figma → kalimat penutup yang menonjol di bawah daftar 01–08 */
   .closing-statement {
     margin-top: max(2.5rem, calc(80 * var(--s)));
     margin-left: calc(max(2.75rem, calc(93 * var(--s))) + max(1rem, calc(37 * var(--s))));
