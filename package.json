@@ -8,7 +8,9 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "build:wp": "cross-env BASE_PATH=/lp/pajak-bulanan astro build",
     "preview": "astro preview",
+    "preview:wp": "cross-env BASE_PATH=/lp/pajak-bulanan astro preview",
     "astro": "astro"
   },
   "dependencies": {
@@ -23,6 +25,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "cross-env": "^10.1.0",
     "typescript": "^6.0.3"
   }
 }

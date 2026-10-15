@@ -1,15 +1,14 @@
 ---
 import { Image } from "astro:assets";
 import logo from "../assets/images/logo-kolega-bisnis.png";
-
+import { nav } from "../data/site";
 ---
 
 <div class="sticky-top" data-sticky-top>
   <div class="container-page">
     <div class="sticky-bar">
-
       <span class="sticky-bar-bg" data-sticky-fade aria-hidden="true"></span>
-      <a href="#top" class="bar-logo" data-sticky-fade aria-label="Kolega Bisnis — kembali ke atas">
+      <a href={nav.homeUrl} class="bar-logo" data-sticky-fade aria-label="Kolega Bisnis — Beranda">
         <Image src={logo} alt="" width={36} height={45} densities={[1, 2]} />
       </a>
       <div class="sticky-slot" data-sticky-slot></div>

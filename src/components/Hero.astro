@@ -1,7 +1,8 @@
 ---
 import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
 import CtaButton from "./CtaButton.astro";
-import { hero } from "../data/site";
+import { hero, nav } from "../data/site";
 import skyline from "../assets/images/hero-skyline.png";
 import logo from "../assets/images/logo-kolega-bisnis.png";
 ---
@@ -22,8 +23,14 @@ import logo from "../assets/images/logo-kolega-bisnis.png";
   </div>
 
   <div class="container-page hero-inner">
-    <div class="logo-card" data-hero-reveal>
-      <Image src={logo} alt="Kolega Bisnis" width={76} height={96} densities={[1, 2]} loading="eager" class="logo-img" />
+    <div class="hero-topbar" data-hero-reveal>
+      <a href={nav.homeUrl} class="logo-card" aria-label="Kolega Bisnis — Beranda">
+        <Image src={logo} alt="" width={76} height={96} densities={[1, 2]} loading="eager" class="logo-img" />
+      </a>
+      <a href={nav.servicesUrl} class="back-link">
+        <Icon name="arrow-right" class="back-link-arrow" width={32} height={14.7279} aria-hidden="true" />
+        <span>{nav.servicesLabel}</span>
+      </a>
     </div>
 
     <h1 class="hero-title" data-hero-title>
@@ -77,6 +84,13 @@ import logo from "../assets/images/logo-kolega-bisnis.png";
     padding-bottom: max(7rem, calc(216 * var(--s)));
   }
 
+  .hero-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
   .logo-card {
     display: grid;
     place-items: center;
@@ -92,6 +106,40 @@ import logo from "../assets/images/logo-kolega-bisnis.png";
   .logo-card :global(.logo-img) {
     width: 61.3%;
     height: auto;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    min-height: 2.75rem;
+    padding: 0.5rem 1.125rem 0.5rem 0.875rem;
+    border: 1px solid #fff;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.34);
+    box-shadow: var(--shadow-cta);
+    font-size: clamp(0.875rem, 0.94vw, 1.125rem);
+    font-weight: 500;
+    color: var(--color-ink);
+    text-decoration: none;
+    transition: background-color 0.25s var(--ease-out-2);
+  }
+
+  .back-link:hover,
+  .back-link:focus-visible {
+    background: #fff;
+  }
+
+  .back-link :global(.back-link-arrow) {
+    width: 1.25rem;
+    height: auto;
+    transform: rotate(180deg);
+    transition: transform 0.25s var(--ease-out-2);
+  }
+
+  .back-link:hover :global(.back-link-arrow),
+  .back-link:focus-visible :global(.back-link-arrow) {
+    transform: rotate(180deg) translateX(4px);
   }
 
   .hero-title {

@@ -10,9 +10,7 @@ Butuh Node.js 22.12 atau lebih baru.
 
 ```bash
 npm install
-npm run dev       # http://localhost:4321
-npm run build     # hasil build di folder dist/
-npm run preview
+npm run dev       # http://localhost:4321/
 ```
 
 ## Mengubah konten
@@ -31,8 +29,22 @@ src/
 └─ styles/          style global & tema
 ```
 
-## Deploy
+## Build & deploy
 
-Import repository ini di [Vercel](https://vercel.com/new), lalu deploy. Pengaturan build terdeteksi otomatis.
+Ada dua mode build. Keduanya menghasilkan folder `dist/`.
 
-Jika memakai domain sendiri, tambahkan environment variable `SITE_URL` (contoh: `https://kolegabisnis.com`).
+| Perintah | Kapan dipakai | Base path |
+| --- | --- | --- |
+| `npm run build` | Vercel atau hosting lain yang menaruh halaman di root domain | `/` |
+| `npm run build:wp` | Versi untuk WordPress | `/lp/pajak-bulanan/` |
+
+**Vercel** — import repository ini di [Vercel](https://vercel.com/new). Vercel otomatis menjalankan `npm run build`.
+
+**WordPress** — halaman tampil di `/services/pajak-bulanan/`, sedangkan file-nya disimpan di `/lp/pajak-bulanan/` di root WordPress.
+
+1. Jalankan `npm run build:wp`.
+2. Upload seluruh isi folder `dist/` ke `/lp/pajak-bulanan/`.
+
+Cek hasil build WordPress secara lokal dengan `npm run preview:wp` (http://localhost:4321/lp/pajak-bulanan/).
+
+Canonical selalu `https://kolegabisnis.com/services/pajak-bulanan/` (diatur di `src/data/site.ts`).

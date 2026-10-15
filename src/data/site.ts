@@ -15,9 +15,16 @@ export const seo = {
   title: "Kepatuhan Pajak Bulanan Kami yang Urus | Kolega Bisnis",
   description:
     "Tidak perlu repot menghitung, mengingat jatuh tempo, atau mengurus pelaporan pajak setiap bulan. Kolega Bisnis memastikan kewajiban pajak Anda dihitung, dibayarkan, dan dilaporkan tepat waktu.",
+  canonical: "https://kolegabisnis.com/services/pajak-bulanan/",
   siteName: "Kolega Bisnis",
-  ogImage: "/og-image.jpg",
+  ogImage: "og-image.jpg",
   ogImageAlt: "Kepatuhan Pajak Bulanan, Kami yang Urus — Kolega Bisnis",
+};
+
+export const nav = {
+  homeUrl: "/",
+  servicesUrl: "/services/",
+  servicesLabel: "Kembali ke Services",
 };
 
 export const ctaLabel = "Konsultasikan Kebutuhan Pajak Anda";

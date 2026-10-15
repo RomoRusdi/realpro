@@ -1,10 +1,14 @@
 ---
 import "@fontsource-variable/dm-sans/opsz.css";
-import "@fontsource/poppins/300.css";
-import "@fontsource/poppins/700.css";
-import "@fontsource/eb-garamond/500.css";
+import "@fontsource/poppins/latin-300.css";
+import "@fontsource/poppins/latin-ext-300.css";
+import "@fontsource/poppins/latin-700.css";
+import "@fontsource/poppins/latin-ext-700.css";
+import "@fontsource/eb-garamond/latin-500.css";
+import "@fontsource/eb-garamond/latin-ext-500.css";
 import "../styles/global.css";
 import { seo } from "../data/site";
+import { withBase } from "../utils/url";
 
 interface Props {
   title?: string;
@@ -12,8 +16,8 @@ interface Props {
 }
 
 const { title = seo.title, description = seo.description } = Astro.props;
-const canonical = new URL(Astro.url.pathname, Astro.site);
-const ogImage = new URL(seo.ogImage, Astro.site);
+const canonical = seo.canonical;
+const ogImage = new URL(withBase(seo.ogImage), Astro.site);
 ---
 
 <!doctype html>
@@ -26,9 +30,9 @@ const ogImage = new URL(seo.ogImage, Astro.site);
     <link rel="canonical" href={canonical} />
     <meta name="theme-color" content="#fff3e6" />
 
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href={withBase("favicon-32.png")} />
+    <link rel="icon" type="image/png" sizes="192x192" href={withBase("icon-192.png")} />
+    <link rel="apple-touch-icon" href={withBase("apple-touch-icon.png")} />
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="id_ID" />
