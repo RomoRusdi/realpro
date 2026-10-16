@@ -7,7 +7,7 @@ const links = isWordPress
       services: "/services/",
     }
   : {
-      canonical: "https://tax-services.kolegabisnis.com/",
+      canonical: "https://monthly-tax-services.kolegabisnis.com/",
       home: "https://kolegabisnis.com/",
       services: "https://kolegabisnis.com/services/",
     };

@@ -5,7 +5,7 @@ import icon from "astro-icon";
 
 const base = process.env.BASE_PATH || "/";
 
-const site = process.env.SITE_URL ?? (base === "/" ? "https://tax-services.kolegabisnis.com" : "https://kolegabisnis.com");
+const site = process.env.SITE_URL ?? (base === "/" ? "https://monthly-tax-services.kolegabisnis.com" : "https://kolegabisnis.com");
 
 export default defineConfig({
   site,

@@ -35,7 +35,7 @@ Ada dua mode build. Keduanya menghasilkan folder `dist/`.
 
 | Perintah | Dipakai untuk | Base path | Canonical |
 | --- | --- | --- | --- |
-| `npm run build` | Vercel — https://tax-services.kolegabisnis.com/ | `/` | `https://tax-services.kolegabisnis.com/` |
+| `npm run build` | Vercel — https://monthly-tax-services.kolegabisnis.com/ | `/` | `https://monthly-tax-services.kolegabisnis.com/` |
 | `npm run build:wp` | Cadangan bila halaman dipasang di WordPress | `/lp/pajak-bulanan/` | `https://kolegabisnis.com/services/pajak-bulanan/` |
 
 **Vercel (utama)** — setiap push ke `main` otomatis di-deploy. Pengaturan build ada di `vercel.json` (`npm run build`, output `dist`). Logo mengarah ke https://kolegabisnis.com/ dan tombol "Kembali ke Services" ke https://kolegabisnis.com/services/.
