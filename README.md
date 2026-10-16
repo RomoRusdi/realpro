@@ -33,18 +33,18 @@ src/
 
 Ada dua mode build. Keduanya menghasilkan folder `dist/`.
 
-| Perintah | Kapan dipakai | Base path |
-| --- | --- | --- |
-| `npm run build` | Vercel atau hosting lain yang menaruh halaman di root domain | `/` |
-| `npm run build:wp` | Versi untuk WordPress | `/lp/pajak-bulanan/` |
+| Perintah | Dipakai untuk | Base path | Canonical |
+| --- | --- | --- | --- |
+| `npm run build` | Vercel — https://tax-services.kolegabisnis.com/ | `/` | `https://tax-services.kolegabisnis.com/` |
+| `npm run build:wp` | Cadangan bila halaman dipasang di WordPress | `/lp/pajak-bulanan/` | `https://kolegabisnis.com/services/pajak-bulanan/` |
 
-**Vercel** — import repository ini di [Vercel](https://vercel.com/new). Vercel otomatis menjalankan `npm run build`.
+**Vercel (utama)** — setiap push ke `main` otomatis di-deploy. Pengaturan build ada di `vercel.json` (`npm run build`, output `dist`). Logo mengarah ke https://kolegabisnis.com/ dan tombol "Kembali ke Services" ke https://kolegabisnis.com/services/.
 
-**WordPress** — halaman tampil di `/services/pajak-bulanan/`, sedangkan file-nya disimpan di `/lp/pajak-bulanan/` di root WordPress.
+**WordPress (opsional)** — halaman tampil di `/services/pajak-bulanan/`, file-nya disimpan di `/lp/pajak-bulanan/` di root WordPress.
 
 1. Jalankan `npm run build:wp`.
 2. Upload seluruh isi folder `dist/` ke `/lp/pajak-bulanan/`.
 
 Cek hasil build WordPress secara lokal dengan `npm run preview:wp` (http://localhost:4321/lp/pajak-bulanan/).
 
-Canonical selalu `https://kolegabisnis.com/services/pajak-bulanan/` (diatur di `src/data/site.ts`).
+Domain, canonical, dan link per mode diatur di `astro.config.mjs` dan `src/data/site.ts`.

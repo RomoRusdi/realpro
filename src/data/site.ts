@@ -1,3 +1,17 @@
+const isWordPress = import.meta.env.BASE_URL !== "/";
+
+const links = isWordPress
+  ? {
+      canonical: "https://kolegabisnis.com/services/pajak-bulanan/",
+      home: "/",
+      services: "/services/",
+    }
+  : {
+      canonical: "https://tax-services.kolegabisnis.com/",
+      home: "https://kolegabisnis.com/",
+      services: "https://kolegabisnis.com/services/",
+    };
+
 const whatsappNumber = "628511316655";
 const whatsappMessage = "Halo Kolega Bisnis, saya ingin konsultasi tentang layanan pajak bulanan.";
 
@@ -15,15 +29,15 @@ export const seo = {
   title: "Kepatuhan Pajak Bulanan Kami yang Urus | Kolega Bisnis",
   description:
     "Tidak perlu repot menghitung, mengingat jatuh tempo, atau mengurus pelaporan pajak setiap bulan. Kolega Bisnis memastikan kewajiban pajak Anda dihitung, dibayarkan, dan dilaporkan tepat waktu.",
-  canonical: "https://kolegabisnis.com/services/pajak-bulanan/",
+  canonical: links.canonical,
   siteName: "Kolega Bisnis",
   ogImage: "og-image.jpg",
   ogImageAlt: "Kepatuhan Pajak Bulanan, Kami yang Urus — Kolega Bisnis",
 };
 
 export const nav = {
-  homeUrl: "/",
-  servicesUrl: "/services/",
+  homeUrl: links.home,
+  servicesUrl: links.services,
   servicesLabel: "Kembali ke Services",
 };
 
